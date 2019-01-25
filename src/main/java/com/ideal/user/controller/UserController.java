@@ -1,0 +1,47 @@
+package com.ideal.user.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ideal.entity.UserInfoEntity;
+import com.ideal.user.service.UserService;
+
+/**
+ * @Auther: JJB
+ * @Date: 2019年1月22日
+ * @Description: 用户列表
+ */
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	
+	@Autowired
+	private UserService userServiceImpl;
+	
+	
+	//获取所有的用户
+    @RequestMapping("/queryAllUser")
+    @ResponseBody
+    public List<UserInfoEntity> queryAllUser(){
+        return userServiceImpl.queryAllUser();
+    }
+
+    
+    //获取所有的用户
+    @RequestMapping("/queryUserBy")
+    @ResponseBody
+    public UserInfoEntity queryUserBy(UserInfoEntity user){
+    	
+    	return userServiceImpl.queryUserBy(user);
+    }
+    
+    
+    
+    
+    
+}

@@ -5,7 +5,7 @@
 
 	<!--  购物车所有商品-->
   	<select id="getAllCart" resultType="com.ideal.order.dto.OrderCartDto">
-  		select o.offer_id,o.offer_name,o.offer_desc,o.pricing,oaa.default_value
+  		select o.offer_id,o.offer_name,o.offer_desc,o.pricing,oaa.default_value,o.offer_type PROD_TYPE
 		from cart c left join offer o 
 		on c.OFFER_ID = o.offer_id
 		left join (select oa.offer_id,oa.default_value from offer_attr oa left join dictionary d on oa.attr_id=d.dictionary_id where d.attr_name="缩略图地址") oaa
@@ -13,9 +13,25 @@
   	</select>
   	<!--  组合商品-->
   	<select id="getGroupOffer" resultType="com.ideal.order.dto.OrderCartDto">
-  		select o.offer_id,o.offer_name,o.offer_desc,o.pricing,oaa.default_value
+  		select o.offer_id,o.offer_name,o.offer_desc,o.pricing,oaa.default_value,o.offer_type PROD_TYPE
 		from offer o left join offer_rel orr on o.offer_id = orr.offer_id
 		left join (select oa.offer_id,oa.default_value from offer_attr oa left join dictionary d on oa.attr_id=d.dictionary_id where d.attr_name="缩略图地址") oaa
 		on o.offer_id=oaa.offer_id where orr.offer_id= #{OFFER_ID}
+  	</select>
+  	<!--  加装包-->
+  	<select id="getAllAdded" resultType="com.ideal.order.dto.OrderAddedDto">
+  		select p.prod_id,p.prod_name,p.prod_desc,oaa.default_value,p.FACTORY_PRICING
+		from offer_rel orr left join offer_prod_rel opr on orr.par_offer_id=opr.offer_id
+		left join  product p on opr.prod_id=p.prod_id left join prod_rel pr on p.prod_id = pr.prod_id
+		left join (select pa.prod_id,pa.default_value from prod_attr pa left join dictionary d on pa.attr_id=d.dictionary_id where d.attr_name="图片地址") oaa
+		on p.prod_id=oaa.prod_id where p.prod_type=0 and orr.offer_id=#{OFFER_ID};
+  	</select>
+  	
+  	<!--  产品-->
+  	<select id="getAllProd" resultType="com.ideal.order.dto.OrderProdDto">
+  		select p.prod_id,p.prod_name,p.prod_desc,oaa.default_value,p.FACTORY_PRICING
+		from offer_prod_rel opr left join  product p on opr.prod_id=p.prod_id 
+		left join (select pa.prod_id,pa.default_value from prod_attr pa left join dictionary d on pa.attr_id=d.dictionary_id where d.attr_name="图片地址") oaa
+		on p.prod_id=oaa.prod_id where opr.offer_id=#{OFFER_ID};
   	</select>
 </mapper>

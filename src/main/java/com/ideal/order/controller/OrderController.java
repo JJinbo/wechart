@@ -37,12 +37,12 @@ public class OrderController {
 	//提交订单
 	@RequestMapping("/addCartOrder")
 	@ResponseBody
-	public List<OrderCartDto> addCartOrder(List<String> IDS , String EFF_DATE , String EXP_DATE){
+	public List<OrderCartDto> addCartOrder(String order){
 		
-		return orderServiceImpl.addCartOrder(IDS ,  EFF_DATE , EXP_DATE);
+		return orderServiceImpl.addCartOrder(order);
 	}
     
     
-
-
+	
+	
 }

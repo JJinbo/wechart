@@ -13,6 +13,6 @@ public interface OrderService {
 
 	List<OrderCartDto> getAllCart(String uSER_NAME);
 
-	List<OrderCartDto> addCartOrder(List<String> iDS, String eFF_DATE, String eXP_DATE);
+	List<OrderCartDto> addCartOrder(String order);
 
 }
